@@ -123,16 +123,15 @@ def main():
         os.system("cd nmap-5.51 && ./configure && make && make install")
     os.system("apt-get -y -q=%d install texlive-latex-base rpm nsis texlive-full" % QUIET_LEVEL)
     
-    install_redis_or_not = raw_input("Do you want to install and run the redis server by recommanded?[y/n]")
+    install_redis_or_not = raw_input("%sDo you want to install and run the redis server by recommanded?%s [y/n]" % (BULE_COLOR, TAIL))
     if install_redis_or_not == 'y|Y':
         redis_server_status = os.system("ps -e | grep redis-server")
         if redis_server_status == 0:
             os.system("apt-get -y -q=%d autoremove redis-server" % QUIET_LEVEL)
-        else:
-            if not os.path.isfile("redis-3.2.6.tar.gz"):
-                os.system("wget http://download.redis.io/releases/redis-3.2.6.tar.gz")
-            os.system("tar zxvf redis-3.2.6.tar.gz && cd redis-3.2.6 && make && make test && make install && cp redis.conf /etc/ && sed -i 's/# unixsocket/unixsocket/g' /etc/redis.conf && sed -i 's/unixsocketperm/# unixsocketperm/g' /etc/redis.conf")
-            os.system("redis-server /etc/redis.conf &")
+        if not os.path.isfile("redis-3.2.6.tar.gz"):
+            os.system("wget http://download.redis.io/releases/redis-3.2.6.tar.gz")
+        os.system("tar zxvf redis-3.2.6.tar.gz && cd redis-3.2.6 && make && make test && make install && cp redis.conf /etc/ && sed -i 's/# unixsocket/unixsocket/g' /etc/redis.conf && sed -i 's/unixsocketperm/# unixsocketperm/g' /etc/redis.conf")
+        os.system("redis-server /etc/redis.conf &")
 
 if __name__ == "__main__":
     main()
