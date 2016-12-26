@@ -110,13 +110,20 @@ def main():
 
     # Install the extra package
     os.system("apt-get -y -q=%d install gnutls-bin" % QUIET_LEVEL)
-    search_nmap = os.system("type nmap")
-    if search_nmap == 0:
-        os.system("apt-get -y -q=%d autoremove nmap" % QUIET_LEVEL)
-        if not os.path.isfile("nmap-5.51.tar.bz2"):
-            os.system("wget https://nmap.org/dist/nmap-5.51.tar.bz2")
-        os.system("bzip2 -cd nmap-5.51.tar.bz2 | tar xvf -")
-        os.system("cd nmap-5.51 && ./configure && make && make install")
+    nmap_addr = commands.getstatusoutput("type nmap")
+    if nmap_addr[0] == 0:
+        nmap_verison = commands.getstatusoutput("nmap -version")
+        nmap_v = nmap_version[1].split(" ")[2]
+        nmap_addr_s = nmap_addr[1].split(" ")[2]
+        if nmap_v != "5.51":
+            uninstall_namp = commands.getstatusoutput("aptitude remove nmap")
+            if uninstall_namp[0] == 0:
+                os.system("wget https://nmap.org/dist/nmap-5.51.tar.bz2")          
+                os.system("bzip2 -cd nmap-5.51.tar.bz2 | tar xvf -")
+                os.system("cd nmap-5.51 && ./configure && make && make install")
+            else:
+                print "%sYou nmap in %s  version is %s, not 5.51, please remove it and run again%s" % (RED_COLOR, nmap_addr_s, nmap_v, TAIL)
+                os.exit(1)
     else:
         os.system("wget https://nmap.org/dist/nmap-5.51.tar.bz2")
         os.system("bzip2 -cd nmap-5.51.tar.bz2 | tar xvf -")
@@ -124,7 +131,8 @@ def main():
     os.system("apt-get -y -q=%d install texlive-latex-base rpm nsis texlive-full" % QUIET_LEVEL)
     
     install_redis_or_not = raw_input("%sDo you want to install and run the redis server by recommanded?%s [y/n]" % (BULE_COLOR, TAIL))
-    if install_redis_or_not == 'y|Y':
+    if install_redis_or_not == 'y':
+        print "some"
         redis_server_status = os.system("ps -e | grep redis-server")
         if redis_server_status == 0:
             os.system("apt-get -y -q=%d autoremove redis-server" % QUIET_LEVEL)
