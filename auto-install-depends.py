@@ -125,7 +125,7 @@ def main():
     
     install_redis_or_not = raw_input("Do you want to install and run the redis server by recommanded?[y/n]")
     if install_redis_or_not == 'y|Y':
-        redis_server_status = os.system("ps -e | grep redis-server"):
+        redis_server_status = os.system("ps -e | grep redis-server")
         if redis_server_status == 0:
             os.system("apt-get -y -q=%d autoremove redis-server" % QUIET_LEVEL)
         else:
