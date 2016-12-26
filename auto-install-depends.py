@@ -74,7 +74,7 @@ def main():
     os.system("apt-get -y -q=%d install libgnutls-dev libgcrypt-dev libglib2.0-dev libglib2.0-0 libxml2 libxml2-dev libxslt-dev libmicrohttpd-dev libmicrohttpd10 pkg-config xsltproc" % QUIET_LEVEL)
     os.system("apt-get -y -q=%d install gettext doxygen xmltoman python-polib libmicrohttpd-dev libxml2-dev libxslt1-dev" % QUIET_LEVEL)
 
-    check_version("libgnutls-dev", "3215")
+    check_version("libgnutls-dev", "3215") # 3215 is mean 3.2.15(greenbone/INSTALL gnutls >= 3.2.15)
     check_version("cmake", "280")
     check_version("libglib2.0-dev", "232")
     check_version("libmicrohttpd10", "90")
