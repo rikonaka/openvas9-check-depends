@@ -106,7 +106,7 @@ def main():
 
     # Install the ospd source code
     print "%sInstall the ospd source code%s" % (PURPLE_COLOR, TAIL)
-    os.system("apt-get -y -q=%d install python-setuptools python-paramiko")
+    os.system("apt-get -y -q=%d install python-setuptools python-paramiko" % QUIET_LEVEL)
 
     # Install the extra package
     os.system("apt-get -y -q=%d install gnutls-bin" % QUIET_LEVEL)
