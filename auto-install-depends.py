@@ -129,7 +129,8 @@ def main():
         if redis_server_status == 0:
             os.system("apt-get -y -q=%d autoremove redis-server" % QUIET_LEVEL)
         else:
-            os.system("wget http://download.redis.io/releases/redis-3.2.6.tar.gz")
+            if not os.path.isfile("redis-3.2.6.tar.gz"):
+                os.system("wget http://download.redis.io/releases/redis-3.2.6.tar.gz")
             os.system("tar zxvf redis-3.2.6.tar.gz && cd redis-3.2.6 && make && make test && make install && cp redis.conf /etc/ && sed -i 's/# unixsocket/unixsocket/g' /etc/redis.conf && sed -i 's/unixsocketperm/# unixsocketperm/g' /etc/redis.conf")
             os.system("redis-server /etc/redis.conf &")
 
