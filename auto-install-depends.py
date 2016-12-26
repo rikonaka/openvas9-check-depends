@@ -29,8 +29,7 @@ def check_version(package_name, want_version):
 
     result = commands.getstatusoutput("aptitude show %s | grep Version | cut -d '-' -f1 | cut -d '+' -f1" % package_name) 
     origin_version = result[1]
-    split_version_first = origin_version.split(':', 1)[1]
-    split_version = split_version_first.split)(':', 1)[1]
+    split_version = origin_version.split(':')[-1]
     num_version = re.sub('\.|\:', '', split_version)
     
     num_version_add = int(num_version) * 100
