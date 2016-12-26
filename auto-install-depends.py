@@ -29,15 +29,11 @@ def check_version(package_name, want_version):
     # This is the Python version and the from a my bash shell script
 
     result = commands.getstatusoutput("aptitude show %s | grep Version | cut -d '-' -f1 | cut -d '+' -f1" % package_name) 
-    print result
     origin_version = result[1]
     split_version_first = origin_version.split(':', 1)[1]
     split_version = split_version_first.split)(':', 1)[1]
-    print split_version
     num_version = re.sub('\.|\:', '', split_version)
-    print num_version
     
-    print num_version, want_version
     num_version_add = int(num_version) * 100
     want_version_add =int(want_version) * 100
     comparison_version(num_version_add, want_version_add, package_name)
